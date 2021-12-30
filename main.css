@@ -4,7 +4,11 @@
     font-style: normal;
 }
 
-#list-page{
+#landing-page{
+    padding-top: 10rem;
+}
+
+#list-page {
     padding: 27px 37px;
 }
 
@@ -33,20 +37,46 @@
     line-height: 14.41px;
 }
 
-.order-by{
-    
+.order-by a {
+    text-decoration: none !important;
 }
 
-#order-by-icon{
-    scale:fill;
+.order-by a::after {
+    display: none;
+}
+
+#order-by-icon {
+    scale: fill;
     width: 26px;
     height: 24px;
 }
 
-#order-by-text{
+.dropdown-menu {
+    border: 1px solid #484848 !important;
+    padding: 0.5rem !important;
+}
+
+.dropdown-item {
+    padding: 6px 9px !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 23px !important;
+    letter-spacing: 0em !important;
+    border-radius: 4px !important;
+    user-select: none !important;
+    cursor: url(src/Cursor_click.png), 15 15, auto;
+    /* HATALI DÜZELT */
+}
+
+.dropdown-item:hover {
+    background: #C4C4C4 !important;
+    color: #FFFFFF !important;
+}
+
+#order-by-text {
     color: #484848;
     font-size: 18px;
-
 }
 
 .search-sheet {
@@ -68,7 +98,7 @@
     color: #888888;
 }
 
-#list-page-search-sheet{
+#list-page-search-sheet {
     margin: 0.5rem 0 0 2rem;
 }
 
@@ -97,9 +127,6 @@
     padding: 1rem 2rem 0.5rem 2rem;
 }
 
-#list-page-search-result{
-
-}
 
 .list-group {
     width: 100%;
@@ -121,3 +148,34 @@
     color: black;
 }
 
+.page-item {
+    margin: 11px;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+.page-link {
+    font-size: 14px;
+    color: #484848 !important;
+    border: 1px solid #484848;
+    border-radius: 4px;
+    box-shadow: none !important;
+}
+
+.page-link:hover{
+    background: #204080 !important;
+    color: #FFFFFF !important;
+}
+
+.dots {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: 0em;
+}
+
+.prev-next {
+    width: 85px !important;
+    text-align: center;
+}
