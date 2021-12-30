@@ -8,7 +8,7 @@
     <title>TESODEV_CASE_2</title>
 
     <!-- Default CSS -->
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../css/main.css">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -26,13 +26,13 @@
 <body id="list-page">
     <div class="d-flex flex-row">
         <span>
-            <img id="list-page-img" class="landing-img" src="src/TESODEV_LOGO.png" alt="">
+            <img id="list-page-img" class="landing-img" src="../src/TESODEV_LOGO.png" alt="">
         </span>
 
         <div id="list-page-search-sheet" class="search-sheet">
             <div id="list-page-search-part" class="search-part d-flex flex-row justify-content-between">
-                <input id="name-search" class="filter-search" type="text" placeholder="Name">
-                <input id="surname-search" class="filter-search" type="text" placeholder="Surname">
+                <input id="list-page-name-search" class="filter-search" type="text" placeholder="Name" value="">
+                <input id="list-page-surname-search" class="filter-search" type="text" placeholder="Surname" value="">
 
                 <button id="button-search" class="filter-search">Search</button>
             </div>
@@ -42,7 +42,7 @@
                 <div class="order-by dropdown d-flex flex-row align-self-end">
                     <a class="dropdown-toggle d-flex align-items-center" href="#" role="button" id="dropdownMenuLink"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img id="order-by-icon" src="src/1542257_sort_arrows_ascending_descending_match_icon.ico">
+                        <img id="order-by-icon" src="../src/Order_by_icon.png">
                         <span id="order-by-text">Order By</span>
                     </a>
 
@@ -88,6 +88,10 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 
+    <!-- Default -->
+
+    <script src="../js/index.js"></script>
+    <script src="../js/list_page.js"></script>
 </body>
 
 </html>

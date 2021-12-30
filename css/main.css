@@ -179,3 +179,10 @@
     width: 85px !important;
     text-align: center;
 }
+
+.alert{
+    display: none;
+    color: #484848 !important;
+    border-radius: 16px !important;
+    padding: 15px 20px !important;
+}

@@ -8,7 +8,7 @@
     <title>TESODEV_CASE</title>
 
     <!-- Default CSS -->
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../css/main.css">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -26,16 +26,16 @@
         <div class="main-sheet d-flex flex-column align-items-center">
             <div class="img-part">
                 <div class="d-flex flex-column justify-content-center align-items-center">
-                    <img id="landing-img" class="img" src="src/TESODEV_LOGO.png" alt="">
+                    <img id="landing-img" class="img" src="../src/TESODEV_LOGO.png" alt="">
                     <span class="img-text">Search web app</span>
                 </div>
             </div>
             <div class="search-sheet">
                 <div class="search-part d-flex flex-row justify-content-between">
-                    <input id="name-search" class="filter-search" type="text" placeholder="Name">
-                    <input id="surname-search" class="filter-search" type="text" placeholder="Surname">
+                    <input id="name-search" class="filter-search" type="text" placeholder="Name" value="">
+                    <input id="surname-search" class="filter-search" type="text" placeholder="Surname" value="">
 
-                    <button id="button-search" class="filter-search">Search</button>
+                    <button id="button-search" class="filter-search" onclick="searchData()">Search</button>
                 </div>
                 <div class="search-result d-flex flex-column align-items-center">
                     <ul class="list-group">
@@ -44,12 +44,14 @@
                         <li class="list-group-item"></li>
                     </ul>
 
-                    <a class="show-more" href="list_page.html">Show more...</a>
+                    <a class="show-more" onclick=changeSearchText()>Show more...</a>
                 </div>
             </div>
         </div>
-
     </div>
+    <span class="alert alert-danger" role="alert">
+        Metin Gir
+    </span>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -57,6 +59,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+
+    <!-- Default -->
+    <script src="../js/index.js"></script>
+    <script src="../js/list_page.js"></script>
 </body>
 
 </html>
