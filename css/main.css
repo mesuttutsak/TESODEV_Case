@@ -4,7 +4,7 @@
     font-style: normal;
 }
 
-#landing-page{
+#landing-page {
     padding-top: 10rem;
 }
 
@@ -124,7 +124,7 @@
     border: 1px solid #484848;
     width: 100%;
     border-radius: 0.25rem;
-    padding: 1rem 2rem 0.5rem 2rem;
+    padding: 1rem 1rem 0.5rem 1rem;
 }
 
 
@@ -134,18 +134,66 @@
 }
 
 .list-group-item {
+    position: relative;
     border: none !important;
-    border-bottom: 1px solid #585858 !important;
-    height: 3.3rem;
-    padding: 0 !important;
-    background: none !important;
+    border-radius: 4px !important;
+    height: auto;
+    padding: 0.5rem !important;
     color: #484848;
 }
 
+.list-group-item:hover{
+    background-color: #C4C4C4;
+}
+
+.left-of-frame{
+    margin-left: 0.2rem;
+}
+
+.fullname {
+    font-size: 18px;
+}
+
+.company {
+    font-size: 12px;
+}
+
+.date {
+    font-size: 12px;
+}
+
+.right-of-frame{
+    width: auto;
+    margin-right: 1rem;
+}
+
+.email {
+    font-size: 18px;
+}
+
+.country{
+    font-size: 12px;
+}
+
+.city {
+    font-size: 12px;
+}
+
+.list-group-item hr{
+    margin: 0; 
+    bottom: 0;
+    border: 1px solid #585858
+}
 .show-more {
+    display: none;
     line-height: 14.06px;
     font-size: 12px;
     color: black;
+    text-decoration: none;
+}
+
+.show-more:hover {
+    color: #000000;
 }
 
 .page-item {
@@ -162,7 +210,7 @@
     box-shadow: none !important;
 }
 
-.page-link:hover{
+.page-link:hover {
     background: #204080 !important;
     color: #FFFFFF !important;
 }
@@ -180,9 +228,39 @@
     text-align: center;
 }
 
-.alert{
+.pop-up {
     display: none;
-    color: #484848 !important;
-    border-radius: 16px !important;
-    padding: 15px 20px !important;
+    position: relative;
+    margin-top: 4rem;
+    left: 45%;
+    bottom: 0;
+    width: 15rem;
+    height: 3rem;
+    border: 2px solid #F5C5BB ;
+    border-radius: 5px !important;
+    background-color: #fcedea;
+    padding: 8px 8px !important;
 }
+
+.pop-up-icon{
+    display: inline-block;
+    height: 1.8rem;
+    width: 1.8rem;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #EB4E2C;
+}
+
+.bi {
+    margin: 0.2rem;
+    font-size: 20px;
+    color: white;
+}
+
+.pop-up-text{
+    font-size: 17px;
+    font-weight:lighter;
+    margin-left: 0.5rem;
+    color: #202020 !important;
+}
+
