@@ -1,8 +1,9 @@
 const landingNameSearch = document.querySelector("#name-search")
 const landingSurnameSearch = document.querySelector("#surname-search")
-const itemList = document.querySelector(".item-list")
+const itemListLandingPage = document.querySelector(".item-list-landing-page")
 
 var userList = new Array();
+
 
 function searchData() {
     if (landingNameSearch.value !== "" && landingSurnameSearch.value !== "") {
@@ -13,23 +14,27 @@ function searchData() {
         setTimeout(() => {
             document.getElementById('pop-up').style.display = "none"
         }, 1500);
-
     }
 }
 
 function fetchData() {
-    fetch("../mockData.json")
-        .then(response => response.json())
-        .then(json => {
-            json.data.forEach(element => {
-                var item = new UserData(element[0], element[1], element[2], element[3], element[4], element[5]);
-                userList.push(item);
-            });
-            fillTable()
-        })
-        .catch((err) => console.log(err))
+    if (userList.length <= 0) {
+        fetch("../mockData.json")
+            .then(response => response.json())
+            .then(json => {
+                json.data.forEach(element => {
+                    var item = new UserData(element[0], element[1], element[2], element[3], element[4], element[5]);
+                    userList.push(item);
+                });
+                setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value));
+                fillTable()
+            })
+            .catch((err) => console.log(err))
+    } else {
+        setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value));
+        fillTable()
+    }
 }
-
 
 function addItem(item) {
     const listItem = document.createElement("li");
@@ -84,7 +89,7 @@ function addItem(item) {
     const hr = document.createElement('hr')
     listItem.appendChild(hr);
 
-    itemList.appendChild(listItem);
+    itemListLandingPage.appendChild(listItem);
 }
 
 function showMore() {
@@ -92,19 +97,20 @@ function showMore() {
 }
 
 function fillTable() {
+    let filteredList = getFromLocaleStorage('searchResult')
     cleanTable()
     let loopCount = 3
-    if (userList.length < loopCount) {
-        loopCount = userList.length
+    if (filteredList.length < loopCount) {
+        loopCount = filteredList.length
     }
     for (let index = 0; index < loopCount; index++) {
-        const element = userList[index];
+        const element = filteredList[index];
 
         if (element) {
             addItem(element);
         }
 
-        if (loopCount > 3) {
+        if (filteredList.length > 3) {
             document.getElementById("show-more").style.display = "block"
         }
     }
@@ -114,4 +120,8 @@ function cleanTable() {
     document.querySelectorAll(".list-group-item").forEach(element => {
         element.remove()
     });
+}
+
+function filterItems(arr, query) {
+    return arr.filter((el) => el.nameSurname.toLowerCase().includes(query.toLowerCase()))
 }
