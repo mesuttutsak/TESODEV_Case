@@ -5,3 +5,4 @@ function setToLocaleStorage(key, val) {
 function getFromLocaleStorage(key) {
     return JSON.parse(localStorage.getItem(key))
 }
+

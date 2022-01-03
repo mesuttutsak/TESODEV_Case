@@ -1,6 +1,6 @@
 const params = new URLSearchParams(window.location.search);
-const listPageNameSearch = document.querySelector("#list-page-name-search");
-const listPageSurnameSearch = document.querySelector("#list-page-surname-search");
+var listPageNameSearch = document.querySelector("#list-page-name-search");
+var listPageSurnameSearch = document.querySelector("#list-page-surname-search");
 
 const itemListListPage = document.querySelector(".item-list-list-page");
 
@@ -9,18 +9,32 @@ const searchSurnameData = sessionStorage.getItem('searchSurnameData');
 
 
 
+var a = new Array();
+
+
+
 window.onload = (e) => {
   if (params.get("name") || params.get("surname")) {
-    listPageNameSearch.value =  params.get("name")
-    listPageSurnameSearch.value =  params.get("surname")
+    listPageNameSearch.value = params.get("name")
+    listPageSurnameSearch.value = params.get("surname")
   }
-  getLocaleArray()
+  listPageSearchData()
+
 };
 
-function addItemListPage(item) {
+function listPageSearchData() {
+  if (listPageNameSearch.value !== "" && listPageNameSearch.value !== "") {
+    getLocaleArray()
+  }
+  else {
+    console.log('hata');
+  }
 
+}
+
+function addItemListPage(item) {
   const listItem = document.createElement("li");
-  listItem.className = "list-group-item";
+  listItem.className = "list-group-item item-list-page";
 
   const infoItem = document.createElement('div');
   infoItem.className = "info-item d-flex flex-row justify-content-between";
@@ -74,13 +88,85 @@ function addItemListPage(item) {
   itemListListPage.appendChild(listItem);
 }
 
-function getLocaleArray(filteredListForListPage) {
-  var filteredListForListPage = getFromLocaleStorage("searchResult");
-  filteredListForListPage.forEach(element => {
-    fillTableForListPage(element)
+function getLocaleArray() {
+  if (a.length <= 0) {
+    var getUserDataForListPage = getFromLocaleStorage("userListData");
+    getUserDataForListPage.forEach(element => {
+      a.push(element);
+    });
+  }
+  setToLocaleStorage("searchResult", filterLocalItems(a, listPageNameSearch.value));
+  fillTableToSortAZForListPage()
+}
+
+function fillTableToSortAZForListPage() {
+  cleanListPageTable()
+  sortByNameAndSurname(getFromLocaleStorage("searchResult"), true).forEach(element => {
+    addItemListPage(element)
   });
 }
 
-function fillTableForListPage(item){
-  addItemListPage(item)   
+function fillTableToSortZAForListPage() {
+  cleanListPageTable()
+  sortByNameAndSurname(getFromLocaleStorage("searchResult"), false).forEach(element => {
+    addItemListPage(element)
+  });
+}
+
+function fillTableStartFirstDateForListPage() {
+  cleanListPageTable()
+  sortByDate(getFromLocaleStorage("searchResult"), true).forEach(element => {
+    addItemListPage(element)
+  });
+}
+
+function fillTableStartLastDateForListPage() {
+  cleanListPageTable()
+  sortByDate(getFromLocaleStorage("searchResult"), false).forEach(element => {
+    addItemListPage(element)
+  });
+}
+
+
+
+
+function filterLocalItems(arr, query) {
+  return arr.filter((el) => el.nameSurname.toLowerCase().includes(query.toLowerCase()))
+}
+
+
+function cleanListPageTable() {
+  document.querySelectorAll(".item-list-page").forEach(element => {
+    element.remove()
+  });
+}
+
+function sortByNameAndSurname(list, isAscending) {
+  var sortedList = list.sort((first, second) => {
+    var firstLowerCase = first.nameSurname.toLowerCase()
+    var secondLowerCase = second.nameSurname.toLowerCase()
+    if (firstLowerCase < secondLowerCase) { return -1; }
+    if (firstLowerCase > secondLowerCase) { return 1; }
+    return 0;
+  })
+
+  if (isAscending) {
+    return sortedList
+  } else {
+    return sortedList.reverse()
+  }
+}
+
+function sortByDate(list, isAscending) {
+  var sortedList = list.sort((first, second) => {
+    var firstDate = moment(first.date,"DD/MM/YYYY").toDate().getTime();
+    var secondDate = moment(second.date,"DD/MM/YYYY").toDate().getTime();
+    return firstDate < secondDate ? -1 : firstDate > secondDate ? 1 : 0
+  })
+
+  if (isAscending) {
+    return sortedList
+  } else {
+    return sortedList.reverse()
+  }
 }

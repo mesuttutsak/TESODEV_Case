@@ -5,6 +5,7 @@ const itemListLandingPage = document.querySelector(".item-list-landing-page")
 var userList = new Array();
 
 
+
 function searchData() {
     if (landingNameSearch.value !== "" && landingSurnameSearch.value !== "") {
         fetchData()
@@ -25,6 +26,7 @@ function fetchData() {
                 json.data.forEach(element => {
                     var item = new UserData(element[0], element[1], element[2], element[3], element[4], element[5]);
                     userList.push(item);
+                   setToLocaleStorage('userListData', userList);
                 });
                 setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value));
                 fillTable()

@@ -34,7 +34,7 @@
                 <input id="list-page-name-search" class="filter-search" type="text" placeholder="Name" value="">
                 <input id="list-page-surname-search" class="filter-search" type="text" placeholder="Surname" value="">
 
-                <button id="button-search" class="filter-search">Search</button>
+                <button id="button-search" class="filter-search"  onclick="listPageSearchData()">Search</button>
             </div>
 
             <div id="list-page-search-result" class="d-flex flex-column align-items-center">
@@ -47,9 +47,10 @@
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="fillTableToSortAZForListPage()">A-Z</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="fillTableToSortZAForListPage()">Z-A</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="fillTableStartFirstDateForListPage()">First Date</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="fillTableStartLastDateForListPage()">Last Date</a></li>
                     </ul>
                 </div>
 
@@ -87,6 +88,7 @@
     <script src="../js/index.js"></script>
     <script src="../js/list_page.js"></script>
     <script src="../data/Localestorage.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
 </body>
 
 </html>
