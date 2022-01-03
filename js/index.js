@@ -33,7 +33,7 @@ function fetchData() {
             })
             .catch((err) => console.log(err))
     } else {
-        setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value));
+        setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value)).sort();
         fillTable()
     }
 }

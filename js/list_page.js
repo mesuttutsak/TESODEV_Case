@@ -3,33 +3,31 @@ var listPageNameSearch = document.querySelector("#list-page-name-search");
 var listPageSurnameSearch = document.querySelector("#list-page-surname-search");
 
 const itemListListPage = document.querySelector(".item-list-list-page");
+const paginationList = document.querySelector(".pagination");
 
 const searchNameData = sessionStorage.getItem('searchNameData');
 const searchSurnameData = sessionStorage.getItem('searchSurnameData');
 
-
-
-var a = new Array();
-
-
+var sortedList = new Array();
+var currentpaginationIndex = 0;
 
 window.onload = (e) => {
   if (params.get("name") || params.get("surname")) {
     listPageNameSearch.value = params.get("name")
     listPageSurnameSearch.value = params.get("surname")
   }
-  listPageSearchData()
-
+  searchData()
 };
 
-function listPageSearchData() {
-  if (listPageNameSearch.value !== "" && listPageNameSearch.value !== "") {
-    getLocaleArray()
-  }
-  else {
-    console.log('hata');
+function searchData() {
+  if (listPageNameSearch.value !== "" || listPageNameSearch.value !== "") {
+    setSearchResult(filterLocalItems(getLocaleUserList(), listPageNameSearch.value))
   }
 
+  sortedList = sortByNameAndSurname(true)
+
+  fillTable()
+  fillPagination()
 }
 
 function addItemListPage(item) {
@@ -88,61 +86,86 @@ function addItemListPage(item) {
   itemListListPage.appendChild(listItem);
 }
 
-function getLocaleArray() {
-  if (a.length <= 0) {
-    var getUserDataForListPage = getFromLocaleStorage("userListData");
-    getUserDataForListPage.forEach(element => {
-      a.push(element);
-    });
+function onClickOrderBy(event) {
+  if (event.target.id === "name-surname-asc") {
+    sortedList = sortByNameAndSurname(true)
+  } else if (event.target.id == "name-surname-desc") {
+    sortedList = sortByNameAndSurname(false)
+  } else if (event.target.id == "date-asc") {
+    sortedList = sortByDate(true)
+  } else if (event.target.id == "date-desc") {
+    sortedList = sortByDate(false)
   }
-  setToLocaleStorage("searchResult", filterLocalItems(a, listPageNameSearch.value));
-  fillTableToSortAZForListPage()
+  currentpagination = 0
+  fillTable()
 }
 
-function fillTableToSortAZForListPage() {
-  cleanListPageTable()
-  sortByNameAndSurname(getFromLocaleStorage("searchResult"), true).forEach(element => {
-    addItemListPage(element)
-  });
-}
-
-function fillTableToSortZAForListPage() {
-  cleanListPageTable()
-  sortByNameAndSurname(getFromLocaleStorage("searchResult"), false).forEach(element => {
-    addItemListPage(element)
-  });
-}
-
-function fillTableStartFirstDateForListPage() {
-  cleanListPageTable()
-  sortByDate(getFromLocaleStorage("searchResult"), true).forEach(element => {
-    addItemListPage(element)
-  });
-}
-
-function fillTableStartLastDateForListPage() {
-  cleanListPageTable()
-  sortByDate(getFromLocaleStorage("searchResult"), false).forEach(element => {
-    addItemListPage(element)
-  });
-}
-
-
-
-
-function filterLocalItems(arr, query) {
-  return arr.filter((el) => el.nameSurname.toLowerCase().includes(query.toLowerCase()))
-}
-
-
-function cleanListPageTable() {
+function fillTable() {
+  //Clean Table
   document.querySelectorAll(".item-list-page").forEach(element => {
     element.remove()
   });
+
+  //Fill Table
+  getPageData().forEach(element => {
+    addItemListPage(element)
+  });
 }
 
-function sortByNameAndSurname(list, isAscending) {
-  var sortedList = list.sort((first, second) => {
+function fillPagination() {
+  //Clean Pagination
+  document.querySelectorAll(".page-item").forEach(element => {
+    element.remove()
+  });
+
+  //Fill Pagination
+  addPages()
+}
+
+function addPages() {
+  const paginationItemPrev = document.createElement("li");
+  paginationItemPrev.className = "page-item page-link prev-next";
+  paginationItemPrev.id = "pagination-prev";
+  paginationItemPrev.innerText = "Previous";
+  paginationItemPrev.onclick = function () {
+    if (currentpaginationIndex > 0) {
+      currentpaginationIndex--;
+      fillTable()
+    }
+  };
+  paginationList.appendChild(paginationItemPrev)
+
+  const paginationItemNumber = document.createElement("li");
+  paginationItemNumber.className = "page-item page-link prev-next";
+  paginationItemNumber.id = "pagination-3";
+  paginationItemNumber.innerText = "3";
+  paginationItemNumber.onclick = function () {
+    currentpaginationIndex = paginationItemNumber.id.split("-")[1] - 1
+    fillTable()
+  };
+  paginationList.appendChild(paginationItemNumber)
+
+  const paginationItemNext = document.createElement("li");
+  paginationItemNext.className = "page-item page-link prev-next";
+  paginationItemNext.id = "pagination-next";
+  paginationItemNext.innerText = "Next";
+  paginationItemNext.onclick = function () {
+    if (currentpaginationIndex < getPageCount() - 1) {
+      currentpaginationIndex++;
+      fillTable()
+    }
+  };
+  paginationList.appendChild(paginationItemNext)
+}
+
+function filterLocalItems(arr, query) {
+  return arr.filter((el) => {
+    return el.nameSurname.toLowerCase().includes(query.toLowerCase())
+  })
+}
+
+function sortByNameAndSurname(isAscending) {
+  var sortedList = getSearchResult().sort((first, second) => {
     var firstLowerCase = first.nameSurname.toLowerCase()
     var secondLowerCase = second.nameSurname.toLowerCase()
     if (firstLowerCase < secondLowerCase) { return -1; }
@@ -157,10 +180,10 @@ function sortByNameAndSurname(list, isAscending) {
   }
 }
 
-function sortByDate(list, isAscending) {
-  var sortedList = list.sort((first, second) => {
-    var firstDate = moment(first.date,"DD/MM/YYYY").toDate().getTime();
-    var secondDate = moment(second.date,"DD/MM/YYYY").toDate().getTime();
+function sortByDate(isAscending) {
+  var sortedList = getSearchResult().sort((first, second) => {
+    var firstDate = moment(first.date, "DD/MM/YYYY").toDate().getTime();
+    var secondDate = moment(second.date, "DD/MM/YYYY").toDate().getTime();
     return firstDate < secondDate ? -1 : firstDate > secondDate ? 1 : 0
   })
 
@@ -169,4 +192,37 @@ function sortByDate(list, isAscending) {
   } else {
     return sortedList.reverse()
   }
+}
+
+function getLocaleUserList() {
+  return getFromLocaleStorage("userListData");
+}
+
+function getSearchResult() {
+  return getFromLocaleStorage("searchResult");
+}
+
+function setSearchResult(searchedList) {
+  return setToLocaleStorage("searchResult", searchedList);
+}
+
+function getPageData() {
+  var pageList = new Array();
+  var limit = 6
+  var startIndex = currentpaginationIndex * limit;
+  var endIndex = startIndex + limit;
+
+  if (endIndex > (sortedList.length - 1)) {
+    endIndex = sortedList.length - 1
+  }
+
+  for (let index = startIndex; index <= endIndex; index++) {
+    const element = sortedList[index];
+    pageList.push(element);
+  }
+  return pageList;
+}
+
+function getPageCount() {
+  return Math.ceil(sortedList.length / 6)
 }

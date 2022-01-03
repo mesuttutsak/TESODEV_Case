@@ -4,6 +4,7 @@
     font-style: normal;
 }
 
+
 #landing-page {
     padding-top: 10rem;
 }
@@ -142,11 +143,11 @@
     color: #484848;
 }
 
-.list-group-item:hover{
+.list-group-item:hover {
     background-color: #C4C4C4;
 }
 
-.left-of-frame{
+.left-of-frame {
     margin-left: 0.2rem;
 }
 
@@ -162,7 +163,7 @@
     font-size: 12px;
 }
 
-.right-of-frame{
+.right-of-frame {
     width: auto;
     margin-right: 1rem;
 }
@@ -171,7 +172,7 @@
     font-size: 18px;
 }
 
-.country{
+.country {
     font-size: 12px;
 }
 
@@ -179,11 +180,12 @@
     font-size: 12px;
 }
 
-.list-group-item hr{
-    margin: 0; 
+.list-group-item hr {
+    margin: 0;
     bottom: 0;
     border: 1px solid #585858
 }
+
 .show-more {
     display: none;
     line-height: 14.06px;
@@ -200,6 +202,7 @@
     margin: 11px;
     box-shadow: none !important;
     text-shadow: none !important;
+    cursor: url(http://www.javascriptkit.com/dhtmltutors/cursor-hand.gif), auto;
 }
 
 .page-link {
@@ -236,13 +239,13 @@
     bottom: 0;
     width: 15rem;
     height: 3rem;
-    border: 2px solid #F5C5BB ;
+    border: 2px solid #F5C5BB;
     border-radius: 5px !important;
     background-color: #fcedea;
     padding: 8px 8px !important;
 }
 
-.pop-up-icon{
+.pop-up-icon {
     display: inline-block;
     height: 1.8rem;
     width: 1.8rem;
@@ -257,10 +260,9 @@
     color: white;
 }
 
-.pop-up-text{
+.pop-up-text {
     font-size: 17px;
-    font-weight:lighter;
+    font-weight: lighter;
     margin-left: 0.5rem;
     color: #202020 !important;
 }
-
