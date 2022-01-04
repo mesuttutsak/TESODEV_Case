@@ -20,8 +20,15 @@ window.onload = (e) => {
 };
 
 function searchData() {
-  if (listPageNameSearch.value !== "" || listPageNameSearch.value !== "") {
+  if (listPageNameSearch.value !== "" && listPageSurnameSearch.value != "" ) {
     setSearchResult(filterLocalItems(getLocaleUserList(), listPageNameSearch.value))
+  } else{
+    listPageNameSearch.classList.add('error-input');
+    listPageSurnameSearch.classList.add('error-input');
+    setTimeout(() => {
+      listPageNameSearch.classList.remove('error-input');
+      listPageSurnameSearch.classList.remove('error-input');
+    }, 2000);
   }
 
   sortedList = sortByNameAndSurname(true)
@@ -119,7 +126,9 @@ function fillPagination() {
   });
 
   //Fill Pagination
-  addPages()
+  if (getSearchResult().length > 6) {
+    addPages()
+  }
 }
 
 function addPages() {
@@ -135,15 +144,18 @@ function addPages() {
   };
   paginationList.appendChild(paginationItemPrev)
 
-  const paginationItemNumber = document.createElement("li");
-  paginationItemNumber.className = "page-item page-link prev-next";
-  paginationItemNumber.id = "pagination-3";
-  paginationItemNumber.innerText = "3";
-  paginationItemNumber.onclick = function () {
-    currentpaginationIndex = paginationItemNumber.id.split("-")[1] - 1
-    fillTable()
-  };
-  paginationList.appendChild(paginationItemNumber)
+
+  for (let index = 1; index < getPageCount() +1; index++) {
+    const paginationItemNumber = document.createElement("li");
+    paginationItemNumber.className = "page-item page-link prev-next";
+    paginationItemNumber.id = "pagination-" + index;
+    paginationItemNumber.innerText = index;
+    paginationItemNumber.onclick = function () {
+      currentpaginationIndex = paginationItemNumber.id.split("-")[1] - 1
+      fillTable()
+    };
+    paginationList.appendChild(paginationItemNumber)
+  }
 
   const paginationItemNext = document.createElement("li");
   paginationItemNext.className = "page-item page-link prev-next";

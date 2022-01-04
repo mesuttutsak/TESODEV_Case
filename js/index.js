@@ -12,8 +12,12 @@ function searchData() {
     }
     else {
         document.getElementById('pop-up').style.display = "inline-block"
+        landingNameSearch.classList.add('error-input');
+        landingSurnameSearch.classList.add('error-input');
         setTimeout(() => {
             document.getElementById('pop-up').style.display = "none"
+            landingNameSearch.classList.remove('error-input');
+            landingSurnameSearch.classList.remove('error-input');
         }, 1500);
     }
 }
@@ -26,7 +30,7 @@ function fetchData() {
                 json.data.forEach(element => {
                     var item = new UserData(element[0], element[1], element[2], element[3], element[4], element[5]);
                     userList.push(item);
-                   setToLocaleStorage('userListData', userList);
+                    setToLocaleStorage('userListData', userList);
                 });
                 setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value));
                 fillTable()
