@@ -220,6 +220,10 @@
     background: #204080 !important;
     color: #FFFFFF !important;
 }
+.page-item-active {
+    background: #204080 !important;
+    color: #FFFFFF !important;
+}
 
 .dots {
     font-size: 24px;

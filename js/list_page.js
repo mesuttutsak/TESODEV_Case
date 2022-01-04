@@ -20,9 +20,9 @@ window.onload = (e) => {
 };
 
 function searchData() {
-  if (listPageNameSearch.value !== "" && listPageSurnameSearch.value != "" ) {
+  if (listPageNameSearch.value !== "" && listPageSurnameSearch.value != "") {
     setSearchResult(filterLocalItems(getLocaleUserList(), listPageNameSearch.value))
-  } else{
+  } else {
     listPageNameSearch.classList.add('error-input');
     listPageSurnameSearch.classList.add('error-input');
     setTimeout(() => {
@@ -31,6 +31,7 @@ function searchData() {
     }, 2000);
   }
 
+  currentpaginationIndex = 0;
   sortedList = sortByNameAndSurname(true)
 
   fillTable()
@@ -103,8 +104,9 @@ function onClickOrderBy(event) {
   } else if (event.target.id == "date-desc") {
     sortedList = sortByDate(false)
   }
-  currentpagination = 0
+  currentpaginationIndex = 0
   fillTable()
+  fillPagination()
 }
 
 function fillTable() {
@@ -140,19 +142,35 @@ function addPages() {
     if (currentpaginationIndex > 0) {
       currentpaginationIndex--;
       fillTable()
+      fillPagination()
     }
   };
   paginationList.appendChild(paginationItemPrev)
 
+  var startIndex = 0
+  var endIndex = getPageCount() - 1
 
-  for (let index = 1; index < getPageCount() +1; index++) {
+  if (currentpaginationIndex < 2) {
+    endIndex = startIndex + 4
+  } else if (currentpaginationIndex > getPageCount() - 3) {
+    startIndex = endIndex - 4
+  } else {
+    var startIndex = parseInt(currentpaginationIndex) - 2
+    var endIndex = parseInt(currentpaginationIndex) + 2
+  }
+
+  for (let index = startIndex; index <= endIndex; index++) {
     const paginationItemNumber = document.createElement("li");
-    paginationItemNumber.className = "page-item page-link prev-next";
+    paginationItemNumber.className = "page-item page-link";
+    if (index == currentpaginationIndex){
+      paginationItemNumber.className += " page-item-active"
+    }
     paginationItemNumber.id = "pagination-" + index;
-    paginationItemNumber.innerText = index;
+    paginationItemNumber.innerText = index + 1;
     paginationItemNumber.onclick = function () {
-      currentpaginationIndex = paginationItemNumber.id.split("-")[1] - 1
+      currentpaginationIndex = paginationItemNumber.id.split("-")[1]
       fillTable()
+      fillPagination()
     };
     paginationList.appendChild(paginationItemNumber)
   }
@@ -165,6 +183,7 @@ function addPages() {
     if (currentpaginationIndex < getPageCount() - 1) {
       currentpaginationIndex++;
       fillTable()
+      fillPagination()
     }
   };
   paginationList.appendChild(paginationItemNext)
