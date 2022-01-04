@@ -7,7 +7,7 @@ var userList = new Array();
 
 
 function searchData() {
-    if (landingNameSearch.value !== "" && landingSurnameSearch.value !== "") {
+    if (landingNameSearch.value !== "" || landingSurnameSearch.value !== "") {
         fetchData()
     }
     else {
@@ -32,12 +32,12 @@ function fetchData() {
                     userList.push(item);
                     setToLocaleStorage('userListData', userList);
                 });
-                setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value));
+                setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value, landingSurnameSearch.value));
                 fillTable()
             })
             .catch((err) => console.log(err))
     } else {
-        setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value)).sort();
+        setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value, landingSurnameSearch.value)).sort();
         fillTable()
     }
 }
@@ -128,6 +128,10 @@ function cleanTable() {
     });
 }
 
-function filterItems(arr, query) {
-    return arr.filter((el) => el.nameSurname.toLowerCase().includes(query.toLowerCase()))
+function filterItems(arr, queryName, querySurname) {
+    return arr.filter((el) => {
+        var isIncludeName = (queryName === "") ? true : el.getName().toLowerCase().includes(queryName.toLowerCase())
+        var isIncludeSurname = (querySurname === "") ? true : el.getSurname().toLowerCase().includes(querySurname.toLowerCase())
+        return isIncludeName && isIncludeSurname
+    })
 }

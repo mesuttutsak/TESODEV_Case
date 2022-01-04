@@ -20,8 +20,8 @@ window.onload = (e) => {
 };
 
 function searchData() {
-  if (listPageNameSearch.value !== "" && listPageSurnameSearch.value != "") {
-    setSearchResult(filterLocalItems(getLocaleUserList(), listPageNameSearch.value))
+  if (listPageNameSearch.value !== "" || listPageSurnameSearch.value != "") {
+    setSearchResult(filterLocalItems(getFromLocaleStorage("userListData"), listPageNameSearch.value, listPageSurnameSearch.value))
   } else {
     listPageNameSearch.classList.add('error-input');
     listPageSurnameSearch.classList.add('error-input');
@@ -162,7 +162,7 @@ function addPages() {
   for (let index = startIndex; index <= endIndex; index++) {
     const paginationItemNumber = document.createElement("li");
     paginationItemNumber.className = "page-item page-link";
-    if (index == currentpaginationIndex){
+    if (index == currentpaginationIndex) {
       paginationItemNumber.className += " page-item-active"
     }
     paginationItemNumber.id = "pagination-" + index;
@@ -189,9 +189,12 @@ function addPages() {
   paginationList.appendChild(paginationItemNext)
 }
 
-function filterLocalItems(arr, query) {
+function filterLocalItems(arr, queryName, querySurname) {
   return arr.filter((el) => {
-    return el.nameSurname.toLowerCase().includes(query.toLowerCase())
+    var userDataElement = new UserData(el.nameSurname, el.company, el.email, el.date, el.country, el.city)
+    var isIncludeName = (queryName === "") ? true : userDataElement.getName().toLowerCase().includes(queryName.toLowerCase())
+    var isIncludeSurname = (querySurname === "") ? true : userDataElement.getSurname().toLowerCase().includes(querySurname.toLowerCase())
+    return isIncludeName && isIncludeSurname
   })
 }
 
@@ -223,10 +226,6 @@ function sortByDate(isAscending) {
   } else {
     return sortedList.reverse()
   }
-}
-
-function getLocaleUserList() {
-  return getFromLocaleStorage("userListData");
 }
 
 function getSearchResult() {
