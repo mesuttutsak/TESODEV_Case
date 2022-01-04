@@ -1,0 +1,62 @@
+#landing-page {
+    padding-top: 10rem;
+}
+
+.main-sheet {
+    height: 100%;
+    width: 67.5%;
+}
+
+#landing-img {
+    height: 115px;
+    width: 278px;
+}
+
+.pop-up {
+    display: none;
+    position: relative;
+    margin-top: 4rem;
+    left: 45%;
+    bottom: 0;
+    width: 15rem;
+    height: 3rem;
+    border: 2px solid #F5C5BB;
+    border-radius: 5px !important;
+    background-color: #fcedea;
+    padding: 8px 8px !important;
+}
+
+.pop-up-icon {
+    display: inline-block;
+    height: 1.8rem;
+    width: 1.8rem;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #EB4E2C;
+}
+
+.bi {
+    margin: 0.2rem;
+    font-size: 20px;
+    color: white;
+}
+
+.pop-up-text {
+    font-size: 17px;
+    font-weight: lighter;
+    margin-left: 0.5rem;
+    color: #202020 !important;
+}
+
+.show-more {
+    display: none;
+    line-height: 14.06px;
+    font-size: 12px;
+    color: black;
+    text-decoration: none;
+    cursor: url(../src/Cursor_by_icon.svg), auto;
+}
+
+.show-more:hover {
+    color: #000000;
+}

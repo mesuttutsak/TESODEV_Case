@@ -32,12 +32,12 @@ function fetchData() {
                     userList.push(item);
                     setToLocaleStorage('userListData', userList);
                 });
-                setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value, landingSurnameSearch.value));
+                setToLocaleStorage('searchResult', sortByNameAndSurname(filterItems(userList, landingNameSearch.value, landingSurnameSearch.value)));
                 fillTable()
             })
             .catch((err) => console.log(err))
     } else {
-        setToLocaleStorage('searchResult', filterItems(userList, landingNameSearch.value, landingSurnameSearch.value)).sort();
+        setToLocaleStorage('searchResult', sortByNameAndSurname(filterItems(userList, landingNameSearch.value, landingSurnameSearch.value)));
         fillTable()
     }
 }
@@ -133,5 +133,15 @@ function filterItems(arr, queryName, querySurname) {
         var isIncludeName = (queryName === "") ? true : el.getName().toLowerCase().includes(queryName.toLowerCase())
         var isIncludeSurname = (querySurname === "") ? true : el.getSurname().toLowerCase().includes(querySurname.toLowerCase())
         return isIncludeName && isIncludeSurname
+    })
+}
+
+function sortByNameAndSurname(list) {
+    return list.sort((first, second) => {
+        var firstLowerCase = first.nameSurname.toLowerCase()
+        var secondLowerCase = second.nameSurname.toLowerCase()
+        if (firstLowerCase < secondLowerCase) { return -1; }
+        if (firstLowerCase > secondLowerCase) { return 1; }
+        return 0;
     })
 }
